@@ -64,12 +64,13 @@ main ()
 		    
 	struct kevent *kev;
 	int inx = 0, num_events;
+	struct timespec tm = {0, 1000000};
 
 	/* main LOOP */
 	while(1) {
 
 		/* registering/adding kevents (if any) and getting active event list */
-		num_events = kevent(kevent_queue, add_evlist, evlist_curlen, active_evlist, MAX_KEVENT, NULL);
+		num_events = kevent(kevent_queue, add_evlist, evlist_curlen, active_evlist, MAX_KEVENT, &tm);
 		if (num_events < 0) {
 			fprintf(stderr, "kevent dailed : %s\n", strerror(errno));
 			continue;
